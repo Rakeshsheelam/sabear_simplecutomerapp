@@ -11,8 +11,8 @@ pipeline {
         NEXUS_URL = "13.54.202.55:8081"
         NEXUS_REPOSITORY = "customer"
         NEXUS_CREDENTIAL_ID = "nexus"
-        SLACK_CHANNEL = '#jenkins-integration'  // replace with your Slack channel name
-        SLACK_CREDENTIALS_ID = 'Slack'  // Your Jenkins Slack API token credentials
+        SLACK_CHANNEL = '#your-slack-channel'  // replace with your Slack channel name
+        SLACK_CREDENTIALS_ID = 'slack-token'  // Your Jenkins Slack API token credentials
     }
 
     stages {
@@ -23,14 +23,6 @@ pipeline {
                     git 'https://github.com/betawins/sabear_simplecutomerapp.git'
                 }
             }
-            post {
-                success {
-                    slackSend(channel: SLACK_CHANNEL, Success: "Code cloned successfully", color: 'good')
-                }
-                failure {
-                    slackSend(channel: SLACK_CHANNEL, Fail: "Code cloning failed", color: 'danger')
-                }
-            }
         }
         
         stage("mvn build") {
@@ -38,14 +30,6 @@ pipeline {
                 script {
                     // Run Maven build
                     sh 'mvn -Dmaven.test.failure.ignore=true install'
-                }
-            }
-            post {
-                success {
-                    slackSend(channel: SLACK_CHANNEL, Success: "Maven build completed successfully", color: 'good')
-                }
-                failure {
-                    slackSend(channel: SLACK_CHANNEL, Fail: "Maven build failed", color: 'danger')
                 }
             }
         }
@@ -80,26 +64,28 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    slackSend(channel: SLACK_CHANNEL, Success: "Artifact published to Nexus successfully", color: 'good')
-                }
-                failure {
-                    slackSend(channel: SLACK_CHANNEL, Fail: "Failed to publish artifact to Nexus", color: 'danger')
-                }
-            }
         }
     }
 
     post {
         always {
-            slackSend(channel: SLACK_CHANNEL, Checking: "Pipeline finished", color: 'warning')
-        }
-        success {
-            slackSend(channel: SLACK_CHANNEL, Success: "Pipeline completed successfully", color: 'good')
-        }
-        failure {
-            slackSend(channel: SLACK_CHANNEL, Fail: "Pipeline failed", color: 'danger')
+            // Send Slack notification at the end of the pipeline
+            script {
+                def status = currentBuild.result ?: 'SUCCESS'  // Default to SUCCESS if not set
+                def message = ""
+                def color = ""
+
+                if (status == 'SUCCESS') {
+                    message = "Pipeline completed successfully. All stages passed!"
+                    color = 'good'  // Green for success
+                } else {
+                    message = "Pipeline failed. Check the logs for details."
+                    color = 'danger'  // Red for failure
+                }
+
+                // Send the Slack notification
+                slackSend(channel: SLACK_CHANNEL, message: Success, color: Good)
+            }
         }
     }
 }
