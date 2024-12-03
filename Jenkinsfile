@@ -72,9 +72,6 @@ pipeline {
                                 file: "pom.xml",
                                 type: "pom"]
                             ]
-				{
-					slackSend channel: 'jenkins-integration', message: 'Rakesh-customerapp-success'
-				}
 			
                         );
                     } else {
