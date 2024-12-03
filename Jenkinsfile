@@ -84,7 +84,7 @@ pipeline {
                 }
 
                 // Send the Slack notification
-                slackSend(channel: SLACK_CHANNEL, message: Success, color: Good)
+                slackSend(channel: SLACK_CHANNEL, message: message, color: color)
             }
         }
     }
