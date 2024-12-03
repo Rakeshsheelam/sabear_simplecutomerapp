@@ -81,3 +81,6 @@ pipeline {
         }
     }
 }
+{
+	slackSend channel: 'jenkins-integration', message: 'Rakesh-customerapp-success'
+}
