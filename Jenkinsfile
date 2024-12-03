@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Let's clone the source
-                    git 'https://github.com/betawins/sabear_simplecutomerapp.git';
+                    git 'git@github.com:Rakeshsheelam/sabear_simplecutomerapp.git';
                 }
             }
         }
