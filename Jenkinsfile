@@ -72,6 +72,10 @@ pipeline {
                                 file: "pom.xml",
                                 type: "pom"]
                             ]
+				{
+					slackSend channel: 'jenkins-integration', message: 'Rakesh-customerapp-success'
+				}
+			
                         );
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
@@ -80,7 +84,4 @@ pipeline {
             }
         }
     }
-}
-{
-	slackSend channel: 'jenkins-integration', message: 'Rakesh-customerapp-success'
 }
