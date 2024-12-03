@@ -11,8 +11,8 @@ pipeline {
         NEXUS_URL = "13.54.202.55:8081"
         NEXUS_REPOSITORY = "customer"
         NEXUS_CREDENTIAL_ID = "nexus"
-        SLACK_CHANNEL = '#your-slack-channel'  // replace with your Slack channel name
-        SLACK_CREDENTIALS_ID = 'slack-token'  // Your Jenkins Slack API token credentials
+        SLACK_CHANNEL = '#jenkins-integration'  // replace with your Slack channel name
+        SLACK_CREDENTIALS_ID = 'Slack'  // Your Jenkins Slack API token credentials
     }
 
     stages {
