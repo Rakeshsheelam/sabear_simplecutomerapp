@@ -76,7 +76,7 @@ pipeline {
                 def color = ""
 
                 if (status == 'SUCCESS') {
-                    message = "Pipeline completed successfully. All stages passed!"
+                    message = "Rakesh sheelam!!! your Pipeline completed successfully. All stages passed!"
                     color = 'good'  // Green for success
                 } else {
                     message = "Pipeline failed. Check the logs for details."
